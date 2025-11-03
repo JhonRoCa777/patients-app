@@ -1,0 +1,128 @@
+<p-dialog
+  header="{{ selectedPatient ? 'Editar Paciente' : 'Nuevo Paciente' }}"
+  [(visible)]="display"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '40vw' }"
+  (onHide)="close()"
+>
+  <form [formGroup]="form" class="p-fluid">
+
+    <!-- Tipo de Documento -->
+    <div class="p-field">
+      <label>Tipo de Documento</label>
+      <p-dropdown
+        [options]="documentTypes"
+        optionLabel="name"
+        optionValue="id"
+        formControlName="documentTypeId"
+        placeholder="Seleccione un tipo"
+      ></p-dropdown>
+      <p-message
+        *ngIf="form.get('documentTypeId')?.invalid && form.get('documentTypeId')?.touched"
+        severity="error"
+        text="Tipo de documento requerido">
+      </p-message>
+    </div>
+
+    <!-- Documento -->
+    <div class="p-field">
+      <label>Documento</label>
+      <input pInputText formControlName="document" />
+      <p-message
+        *ngIf="form.get('document')?.invalid && form.get('document')?.touched"
+        severity="error"
+        text="Documento requerido (6-10 dígitos)">
+      </p-message>
+    </div>
+
+    <!-- Nombre -->
+    <div class="p-field">
+      <label>Nombre</label>
+      <input pInputText formControlName="firstName" />
+      <p-message
+        *ngIf="form.get('firstName')?.invalid && form.get('firstName')?.touched"
+        severity="error"
+        text="Nombre requerido (máx. 80 caracteres)">
+      </p-message>
+    </div>
+
+    <!-- Apellido -->
+    <div class="p-field">
+      <label>Apellido</label>
+      <input pInputText formControlName="lastName" />
+      <p-message
+        *ngIf="form.get('lastName')?.invalid && form.get('lastName')?.touched"
+        severity="error"
+        text="Apellido requerido (máx. 80 caracteres)">
+      </p-message>
+    </div>
+
+    <!-- Fecha de Nacimiento -->
+    <div class="p-field">
+      <label>Fecha de Nacimiento</label>
+      <p-calendar formControlName="birthDate" dateFormat="yy-mm-dd"></p-calendar>
+      <p-message
+        *ngIf="form.get('birthDate')?.hasError('required') && form.get('birthDate')?.touched"
+        severity="error"
+        text="Fecha de nacimiento requerida">
+      </p-message>
+      <p-message
+        *ngIf="form.get('birthDate')?.hasError('futureDate') && form.get('birthDate')?.touched"
+        severity="error"
+        text="La fecha no puede ser futura">
+      </p-message>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="p-field">
+      <label>Teléfono</label>
+      <input pInputText formControlName="phoneNumber" />
+      <p-message
+        *ngIf="form.get('phoneNumber')?.hasError('maxlength') && form.get('phoneNumber')?.touched"
+        severity="error"
+        text="Máximo 20 caracteres">
+      </p-message>
+    </div>
+
+    <!-- Email -->
+    <div class="p-field">
+      <label>Email</label>
+      <input pInputText formControlName="email" />
+      <p-message
+        *ngIf="form.get('email')?.hasError('email') && form.get('email')?.touched"
+        severity="error"
+        text="Email inválido">
+      </p-message>
+      <p-message
+        *ngIf="form.get('email')?.hasError('maxlength') && form.get('email')?.touched"
+        severity="error"
+        text="Máximo 120 caracteres">
+      </p-message>
+    </div>
+
+    <!-- Row Version (Debug) -->
+    <div class="p-field">
+      <label>Row Version (Debugging)</label>
+      <input pInputText formControlName="rowVersion"/>
+    </div>
+
+  </form>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="close()"
+    ></button>
+    <button
+      pButton
+      label="{{ selectedPatient ? 'Actualizar' : 'Guardar' }}"
+      icon="pi pi-check"
+      class="p-button-success"
+      (click)="save()"
+    ></button>
+  </ng-template>
+</p-dialog>

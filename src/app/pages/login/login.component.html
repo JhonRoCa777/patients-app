@@ -1,0 +1,47 @@
+<div class="login-container">
+
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <!-- Tipo de documento -->
+    <label for="DocumentTypeId">Tipo de documento:</label>
+    <br>
+    <p-dropdown
+      id="DocumentTypeId"
+      [options]="(documentTypes$ | async) || []"
+      optionLabel="name"
+      optionValue="id"
+      formControlName="DocumentTypeId"
+      placeholder="Seleccione tipo"
+      [style]="{ width: '100%' }"
+    ></p-dropdown>
+    <p-message *ngIf="loginForm.get('DocumentTypeId')?.invalid && loginForm.get('DocumentTypeId')?.touched"
+              severity="error"
+              text="Tipo de documento requerido">
+    </p-message>
+
+    <br><br>
+
+    <!-- Documento -->
+    <label for="Document">Documento</label>
+    <br>
+    <p-inputNumber
+      id="Document"
+      formControlName="Document"
+      [min]="100000"
+      [max]="9999999999"
+      placeholder="Ingrese documento"
+      [showButtons]="false"
+    ></p-inputNumber>
+    <p-message *ngIf="loginForm.get('Document')?.invalid && loginForm.get('Document')?.touched"
+              severity="error"
+              text="Documento requerido y Entre 6 y 10 dígitos">
+    </p-message>
+
+    <br><br>
+
+    <!-- Botón -->
+    <button pButton type="submit" label="Ingresar"></button>
+  </form>
+</div>

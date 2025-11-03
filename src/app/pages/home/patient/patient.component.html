@@ -1,0 +1,23 @@
+<p-table [value]="patientChanges" [paginator]="true" [rows]="10" [loading]="loading">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Responsable</th>
+      <th>Entity</th>
+      <th>Created At</th>
+      <th>Changes</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-change>
+    <tr>
+      <td>
+        {{ change.responsable.firstName }} {{ change.responsable.lastName }}<br/>
+        ID: {{ change.responsable.id }}<br/>
+        Document: {{ change.responsable.document }}
+      </td>
+      <td>{{ change.entityId }} - {{ change.entity }}</td>
+      <td>{{ formatDate(change.createdAt) }}</td>
+      <td><pre>{{ change.changes }}</pre></td>
+    </tr>
+  </ng-template>
+</p-table>
